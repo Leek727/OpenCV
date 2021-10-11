@@ -11,8 +11,9 @@ while 1:  # 727
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV_FULL)
 
     # define range of blue color in HSV
-    lower_orange = np.array([15, 80, 80])
-    upper_orange = np.array([40, 255, 255])
+    #lower_orange = np.array([15, 90, 90])
+    lower_orange = np.array([15, 90, 90])
+    upper_orange = np.array([100, 255, 255])
     lower_white = np.array([0, 0, 200])
 
     upper_white = np.array([255, 5, 255])
@@ -34,7 +35,7 @@ while 1:  # 727
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
     # threshold
-    thresh = cv2.threshold(gray,128,255,cv2.THRESH_BINARY)[1]
+    thresh = cv2.threshold(gray,130,255,cv2.THRESH_BINARY)[1]
 
     # get contours
     result = img.copy()
@@ -42,7 +43,8 @@ while 1:  # 727
     contours = contours[0] if len(contours) == 2 else contours[1]
     for cntr in contours:
         x,y,w,h = cv2.boundingRect(cntr)
-        cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        if w > 50:
+            cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 3)
 
     cv2.imshow("test", result)
 
